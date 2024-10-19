@@ -21,7 +21,7 @@ A simple and effective Python script to organize your files into designated fold
 ---
 
 ## 🎉 Introduction
-The **File Organizer** helps users efficiently manage their files by categorizing them into folders like **Videos**, **Audios**, **Documents**, **Images**, **Archives**, and more. You can also ungroup folders and move files back to a specified directory.
+The **File Swift** helps users efficiently manage their files by categorizing them into folders like **Videos**, **Audios**, **Documents**, **Images**, **Archives**, and more. You can also ungroup folders and move files back to a specified directory.
 
 ---
 
