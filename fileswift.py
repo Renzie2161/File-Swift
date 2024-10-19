@@ -131,15 +131,15 @@ def organize_files():
                 print(f"{RED}[ERROR]{RESET} The directory '{base_directory}' does not exist. Please try again.")
                 continue
 
+            if is_already_organized(base_directory):
+                print(f"{RED}[ERROR]{RESET} The directory '{base_directory}' is already organized. Please select a different folder.")
+                continue
+
             custom_config_path = input("Do you have a custom file categories JSON file? (leave blank for default): ").strip()
             if custom_config_path:
                 custom_categories = load_custom_categories(custom_config_path)
                 if custom_categories:
                     file_categories = custom_categories
-
-            if is_already_organized(base_directory):
-                print(f"{RED}[ERROR]{RESET} The directory '{base_directory}' is already organized. Please select a different folder.")
-                continue
 
             if not get_confirmation(f"Are you sure you want to organize the files in '{base_directory}'? (Y/n): "):
                 print(f"{RED}[INFO]{RESET} Operation canceled. Please enter a new path.")
@@ -175,9 +175,13 @@ def organize_files():
             print_summary(summary, time() - start_time)
             input("\nPress any key to return to the menu.")
             break
-
+            
+        except KeyboardInterrupt:
+            print(f"\n{RED}[INFO]{RESET} Operation interrupted. Exiting...")
+            break
         except Exception as err:
             print(f"{RED}[ERROR]{RESET} An error has occurred: {err}")
+            break
 
 
 def print_summary(summary, elapsed_time):
@@ -189,107 +193,129 @@ def print_summary(summary, elapsed_time):
 
 
 def ungroup_folder(folder_path, folders_to_ungroup):
-    start_time = time()
-    available_folders = [d for d in os.listdir(folder_path) if os.path.isdir(os.path.join(folder_path, d))]
-    
-    if not available_folders:
-        print(f"{RED}[INFO]{RESET} No folders found in '{folder_path}'. No actions required.")
-        return
-
-    if folders_to_ungroup in ['all', '*', '']:
-        folders_to_ungroup = available_folders
-        print(f"{GREEN}[INFO]{RESET} Ungrouping all folders: {folders_to_ungroup}")
-    else:
-        folders_to_ungroup = [folder.strip() for folder in folders_to_ungroup.split(',') if folder.strip()]
-        invalid_folders = [folder for folder in folders_to_ungroup if folder not in available_folders]
-
-        if invalid_folders:
-            print(f"{RED}[ERROR]{RESET} The following folders are not valid: {', '.join(invalid_folders)}. Skipping those.")
-
-        folders_to_ungroup = [folder for folder in folders_to_ungroup if folder in available_folders]
+    try:
+        start_time = time()
+        available_folders = [d for d in os.listdir(folder_path) if os.path.isdir(os.path.join(folder_path, d))]
         
-        if not folders_to_ungroup:
-            print(f"{RED}[ERROR]{RESET} No valid folders to ungroup. Stopping the operation.")
+        if not available_folders:
+            print(f"{RED}[INFO]{RESET} No folders found in '{folder_path}'. No actions required.")
             return
 
-        print(f"{GREEN}[INFO]{RESET} Ungrouping specified folders: {folders_to_ungroup}")
+        if folders_to_ungroup in ['all', '*', '']:
+            folders_to_ungroup = available_folders
+            print(f"{GREEN}[INFO]{RESET} Ungrouping all folders: {folders_to_ungroup}")
+        else:
+            folders_to_ungroup = [folder.strip() for folder in folders_to_ungroup.split(',') if folder.strip()]
+            invalid_folders = [folder for folder in folders_to_ungroup if folder not in available_folders]
 
-    moved = 0
-    removed = 0
+            if invalid_folders:
+                print(f"{RED}[ERROR]{RESET} The following folders are not valid: {', '.join(invalid_folders)}. Skipping those.")
 
-    for folder in folders_to_ungroup:
-        folder_path_to_ungroup = os.path.join(folder_path, folder)
-        if not os.path.isdir(folder_path_to_ungroup):
-            print(f"{RED}[ERROR]{RESET} '{folder}' is not a valid folder in '{folder_path}'. Skipping.")
-            continue
+            folders_to_ungroup = [folder for folder in folders_to_ungroup if folder in available_folders]
+            
+            if not folders_to_ungroup:
+                print(f"{RED}[ERROR]{RESET} No valid folders to ungroup. Stopping the operation.")
+                return
 
-        for root, dirs, files in os.walk(folder_path_to_ungroup, topdown=False):
-            for name in files:
-                file_path = os.path.join(root, name)
-                shutil.move(file_path, folder_path)
-                print(f'{GREEN}[INFO]{RESET} Moved: {file_path} -> {folder_path}')
-                moved += 1
+            print(f"{GREEN}[INFO]{RESET} Ungrouping specified folders: {folders_to_ungroup}")
 
-            for name in dirs:
-                dir_path = os.path.join(root, name)
-                try:
-                    os.rmdir(dir_path)
-                    print(f'{GREEN}[INFO]{RESET} Removed empty directory: {dir_path}')
-                    removed += 1
-                except OSError as e:
-                    print(f'{RED}[ERROR]{RESET} Could not remove directory {dir_path}: {e}')
+        moved = 0
+        removed = 0
 
-        try:
-            os.rmdir(folder_path_to_ungroup)
-            print(f'{GREEN}[INFO]{RESET} Removed directory: {folder_path_to_ungroup}')
-            removed += 1
-        except OSError as e:
-            print(f'{RED}[ERROR]{RESET} Could not remove directory {folder_path_to_ungroup}: {e}')
+        for folder in folders_to_ungroup:
+            folder_path_to_ungroup = os.path.join(folder_path, folder)
+            if not os.path.isdir(folder_path_to_ungroup):
+                print(f"{RED}[ERROR]{RESET} '{folder}' is not a valid folder in '{folder_path}'. Skipping.")
+                continue
 
-    print_summary({'Moved': moved, 'Removed': removed}, time() - start_time)
-    input("\nPress any key to return to the menu.")
+            for root, dirs, files in os.walk(folder_path_to_ungroup, topdown=False):
+                for name in files:
+                    file_path = os.path.join(root, name)
+                    shutil.move(file_path, folder_path)
+                    print(f'{GREEN}[INFO]{RESET} Moved: {file_path} -> {folder_path}')
+                    moved += 1
+
+                for name in dirs:
+                    dir_path = os.path.join(root, name)
+                    try:
+                        os.rmdir(dir_path)
+                        print(f'{GREEN}[INFO]{RESET} Removed empty directory: {dir_path}')
+                        removed += 1
+                    except OSError as e:
+                        print(f'{RED}[ERROR]{RESET} Could not remove directory {dir_path}: {e}')
+
+            try:
+                os.rmdir(folder_path_to_ungroup)
+                print(f'{GREEN}[INFO]{RESET} Removed directory: {folder_path_to_ungroup}')
+                removed += 1
+            except OSError as e:
+                print(f'{RED}[ERROR]{RESET} Could not remove directory {folder_path_to_ungroup}: {e}')
+
+        print_summary({'Moved': moved, 'Removed': removed}, time() - start_time)
+        input("\nPress any key to return to the menu.")
+
+    except KeyboardInterrupt:
+        print(f"\n{RED}[INFO]{RESET} Operation interrupted. Exiting...")
+    except Exception as e:
+        print(f"{RED}[ERROR]{RESET} An error has occurred during ungrouping: {e}")
 
 
 def ungroup():
     while True:
-        user_input = input("Enter the folder path to ungroup ('q' to quit): ")
-        if user_input.lower() == "q":
-            print(f"{GREEN}[INFO]{RESET} Exiting the program.")
+        try:
+            user_input = input("Enter the folder path to ungroup ('q' to quit): ")
+            if user_input.lower() == "q":
+                print(f"{GREEN}[INFO]{RESET} Exiting the program.")
+                break
+
+            if not user_input:
+                print(f"{RED}[ERROR]{RESET} No folder path provided. Please try again.")
+                continue
+
+            if not os.path.isdir(user_input):
+                print(f"{RED}[ERROR]{RESET} The path '{user_input}' is not a valid directory.")
+                continue
+
+            folders_input = input("Enter the folder names to ungroup (comma or semicolon separated), or leave blank for all: ")
+            
+            if not get_confirmation(f"Are you sure you want to ungroup the folders in '{user_input}'? (Y/n): "):
+                print(f"{RED}[INFO]{RESET} Operation canceled. Please enter a new path.")
+                continue
+            
+            ungroup_folder(user_input, folders_input)
             break
-
-        if not user_input:
-            print(f"{RED}[ERROR]{RESET} No folder path provided. Please try again.")
-            continue
-
-        if not os.path.isdir(user_input):
-            print(f"{RED}[ERROR]{RESET} The path '{user_input}' is not a valid directory.")
-            continue
-
-        folders_input = input("Enter the folder names to ungroup (comma or semicolon separated), or leave blank for all: ")
-        ungroup_folder(user_input, folders_input)
-        break
+        except KeyboardInterrupt:
+            print(f"\n{RED}[INFO]{RESET} Operation interrupted. Exiting...")
+            break
 
 
 def main_menu():
     while True:
-        print("\n" + "#" * 30)
-        print("FILE ORGANIZER".center(30))
-        print("#" * 30 + "\n")
-        print("Choose an option:")
-        print("1. Organize Files")
-        print("2. Ungroup Folders")
-        print("q. Quit")
-        choice = input("Enter your choice: ").strip().lower()
+        try:
+            print("\n" + "#" * 30)
+            print("FILE ORGANIZER".center(30))
+            print("#" * 30 + "\n")
+            print("Choose an option:")
+            print("1. Organize Files")
+            print("2. Ungroup Folders")
+            print("3. Quit")
+            choice = input("Enter your choice: ").strip().lower()
 
-        if choice == '1':
-            organize_files()
-        elif choice == '2':
-            ungroup()
-        elif choice == 'q':
-            print(f"{GREEN}[INFO]{RESET} Exiting the program.")
+            if choice == '1':
+                organize_files()
+            elif choice == '2':
+                ungroup()
+            elif choice == '3' or choice == 'q':
+                print(f"{GREEN}[INFO]{RESET} Exiting the program.")
+                break
+            else:
+                print(f"{RED}[ERROR]{RESET} Invalid choice. Please try again.")
+            
+        except KeyboardInterrupt:
+            print(f"\n{RED}[INFO]{RESET} Operation interrupted. Exiting...")
             break
-        else:
-            print(f"{RED}[ERROR]{RESET} Invalid choice. Please try again.")
+        except Exception as err:
+            print(f"{RED}[ERROR]{RESET} An unexpected error has occurred: {err}")
 
 if __name__ == "__main__":
     main_menu()
