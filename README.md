@@ -77,6 +77,11 @@ Provide the path to your custom JSON file when prompted. The program will valida
 
 ---
 
+> [!IMPORTANT]
+> This program is no longer actively maintained or supported. Feel free to use it as-is, but there may be bugs or issues that have not been addressed. Consider using alternative solutions for similar functionality.
+
+---
+
 ## 📄 License
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
