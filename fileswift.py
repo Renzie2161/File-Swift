@@ -293,7 +293,7 @@ def main_menu():
     while True:
         try:
             print("\n" + "#" * 30)
-            print("FILE ORGANIZER".center(30))
+            print("FILE SWIFT".center(30))
             print("#" * 30 + "\n")
             print("Choose an option:")
             print("1. Organize Files")
