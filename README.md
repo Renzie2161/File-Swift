@@ -1,4 +1,4 @@
-# 📁 File Organizer
+# 📁 FileSwift
 A simple and effective Python script to organize your files into designated folders based on their file extensions. 
 
 ![GitHub last commit](https://img.shields.io/github/last-commit/Renzie2161/FileSwift)
@@ -21,7 +21,7 @@ A simple and effective Python script to organize your files into designated fold
 ---
 
 ## 🎉 Introduction
-The **File Swift** helps users efficiently manage their files by categorizing them into folders like **Videos**, **Audios**, **Documents**, **Images**, **Archives**, and more. You can also ungroup folders and move files back to a specified directory.
+**FileSwift** helps users efficiently manage their files by categorizing them into folders like **Videos**, **Audios**, **Documents**, **Images**, **Archives**, and more. You can also ungroup folders and move files back to a specified directory.
 
 ---
 
