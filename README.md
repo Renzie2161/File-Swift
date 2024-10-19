@@ -1,6 +1,5 @@
 # 📁 File Organizer
 
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/Renzie2161/FileSwift?label=latest%20release)
 ![GitHub last commit](https://img.shields.io/github/last-commit/Renzie2161/FileSwift)
 ![GitHub issues](https://img.shields.io/github/issues/Renzie2161/FileSwift)
 ![GitHub pull requests](https://img.shields.io/github/issues-pr/Renzie2161/FileSwift)
