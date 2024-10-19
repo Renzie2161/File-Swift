@@ -1,5 +1,4 @@
 # 📁 FileSwift
-A simple and effective Python script to organize your files into designated folders based on their file extensions. 
 
 ![GitHub last commit](https://img.shields.io/github/last-commit/Renzie2161/FileSwift)
 ![GitHub issues](https://img.shields.io/github/issues/Renzie2161/FileSwift)
@@ -8,6 +7,7 @@ A simple and effective Python script to organize your files into designated fold
 ![GitHub stars](https://img.shields.io/github/stars/Renzie2161/FileSwift?style=social)
 ![GitHub forks](https://img.shields.io/github/forks/Renzie2161/FileSwift)
 
+A simple and effective Python script to organize your files into designated folders based on their file extensions. 
 
 ## 📖 Table of Contents
 - [Introduction](#-introduction)
