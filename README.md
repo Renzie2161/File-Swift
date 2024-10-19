@@ -2,9 +2,9 @@
 A simple and effective Python script to organize your files into designated folders based on their file extensions. 
 
 ## 📖 Table of Contents
-- [Introduction](#introduction)
-- [Installation](#installation)
-- [Usage](#usage)
+- [Introduction](#-introduction)
+- [Installation](#-installation)
+- [Usage](#-usage)
   - [Organizing Files](#organizing-files)
   - [Ungrouping Folders](#ungrouping-folders)
 - [Custom Configuration](#custom-configuration)
