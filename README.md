@@ -79,6 +79,22 @@ Create a JSON file with this structure:
     "Images": [".jpg", ".png"]
 }
 ```
+```
+{
+  "Text and Document Files": [".txt", ".doc", ".docx", ".odt", ".pdf", ".rtf", ".tex", ".html", ".htm", ".md", ".epub", ".xml", ".json", ".csv"],
+  "Spreadsheet and Database Files": [".xls", ".xlsx", ".ods", ".csv", ".mdb", ".sqlite", ".db"],
+  "Image Files": [".jpg", ".jpeg", ".png", ".gif", ".bmp", ".tiff", ".tif", ".webp", ".svg", ".raw", ".ico", ".heif", ".heic"],
+  "Audio and Video Files": [".mp3", ".wav", ".flac", ".ogg", ".aac", ".m4a", ".mp4", ".avi", ".mov", ".mkv", ".webm", ".flv", ".3gp", ".wmv"],
+  "Compressed and Archive Files": [".zip", ".tar", ".gz", ".rar", ".7z", ".bz2", ".xz", ".iso", ".img"],
+  "Executable and Script Files": [".exe", ".bat", ".sh", ".ps1", ".apk", ".app", ".jar", ".py", ".php", ".cgi", ".rb"],
+  "System and Configuration Files": [".ini", ".sys", ".dll", ".cfg", ".log", ".bak", ".tmp", ".config"],
+  "Font Files": [".ttf", ".otf", ".woff", ".eot"],
+  "Web and Internet Files": [".css", ".js", ".json", ".php", ".asp", ".aspx", ".xml", ".svg", ".rss", ".yml", ".yaml"],
+  "Virtualization and Disk Images": [".vmdk", ".vdi", ".vhd", ".vhdx", ".qcow2"],
+  "Programming and Development Files": [".cpp", ".h", ".java", ".cs", ".go", ".swift", ".rs", ".html", ".css", ".xml", ".json", ".sql"],
+  "Miscellaneous": [".torrent", ".srt", ".vtt", ".ics", ".pst", ".eml", ".epub", ".mobi", ".azw3"]
+}
+```
 
 ### Loading the Custom Configuration
 Provide the path to your custom JSON file when prompted. The program will validate the structure.
