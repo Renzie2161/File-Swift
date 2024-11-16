@@ -79,7 +79,7 @@ Create a JSON file with this structure:
     "Images": [".jpg", ".png"]
 }
 ```
-```
+```json
 {
   "Text and Document Files": [".txt", ".doc", ".docx", ".odt", ".pdf", ".rtf", ".tex", ".html", ".htm", ".md", ".epub", ".xml", ".json", ".csv"],
   "Spreadsheet and Database Files": [".xls", ".xlsx", ".ods", ".csv", ".mdb", ".sqlite", ".db"],
